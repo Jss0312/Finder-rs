@@ -1,0 +1,23 @@
+[package]
+name = "search"
+version = "2.0.0"
+edition = "2021"
+authors = ["Jss"]
+description = "Fast multithreaded file/folder searcher over local paths and UNC/SMB shares"
+
+[[bin]]
+name = "search"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+crossbeam-channel = "0.5"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+
+[target.'cfg(windows)'.dependencies]
+# Netapi32 is linked via #[link(name = "Netapi32")] in main.rs
